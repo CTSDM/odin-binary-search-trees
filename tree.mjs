@@ -96,6 +96,18 @@ class Tree {
         return;
     }
 
+    find(value, node = this.root) {
+        if (node !== null) {
+            if (node.data === value)
+                return node;
+            else if (node.data > value)
+                return this.find(value, node.left);
+            else
+                return this.find(value, node.right);
+        }
+        return null;
+    }
+
     // This method is used to find recursively the most left child
     // it is implemented outside of the deleteItem method to save memory
     // since the deleteItem is also called recursively.
