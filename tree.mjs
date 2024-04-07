@@ -29,6 +29,26 @@ class Tree {
         return null;
     }
 
+    insert(value, node = this.root) {
+        // We assume that there might not be even exist a root node
+        if (node === null) {
+            this.root = new Node(value);
+        }
+        if (value > node.data) {
+            if (node.right === null)
+                node.right = new Node(value);
+            else
+                this.insert(value, node.right);
+        }
+        else if (value < node.data) {
+            if (node.left === null)
+                node.left = new Node(value);
+            else
+                this.insert(value, node.left);
+        }
+        return;
+    }
+
     #removeDuplicates(arr) {
         // Because the array is ordered and composed by numbers we can apply a first difference
         // The first difference generates a sequence whose length is 1 less than the original
@@ -50,6 +70,5 @@ class Tree {
         // We remove the end values
         arr.splice(k + 1);
     }
-
 }
 
