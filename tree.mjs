@@ -108,6 +108,19 @@ class Tree {
         return null;
     }
 
+    levelOrderRecursive(callback, arrQueue = [this.root]) {
+        if (arrQueue[0] === null)
+            return null;
+        if (arrQueue.length > 0) {
+            if (arrQueue[0].left !== null)
+                arrQueue.push(arrQueue[0].left);
+            if (arrQueue[0].right !== null)
+                arrQueue.push(arrQueue[0].right);
+            callback(arrQueue.shift().data);
+            this.levelOrderRecursive(callback, arrQueue);
+        }
+    }
+
     // This method is used to find recursively the most left child
     // it is implemented outside of the deleteItem method to save memory
     // since the deleteItem is also called recursively.
