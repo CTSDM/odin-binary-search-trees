@@ -49,6 +49,62 @@ class Tree {
         return;
     }
 
+    deleteItem(value, node = this.root, parentNode = undefined) {
+        // We look for the value, if it is found we remove it.
+        // Otherwise we do nothing.
+        // If the node containing the value is a leaf (null right and left child)
+        // we remove its pointer from the parent, so it now points to null.
+        // Otherwise, we apply the following logic:
+        // We look for the node that is on its right, and then from that node we search
+        // for the node that is on the most left position
+
+        if (node === null)
+            return;
+        if (node.data > value)
+            this.deleteItem(value, node.left, node);
+        else if (node.data < value)
+            this.deleteItem(value, node.right, node);
+        else {
+            const rightChild = node.right;
+            // the item to be deleted is a leaf
+            if (rightChild === null && node.left === null) {
+                if (parentNode === undefined)
+                    this.root = null;
+                else {
+                    if (parentNode.left) {
+                        if (parentNode.left.data === value)
+                            parentNode.left = null;
+                    }
+                    else
+                        parentNode.right = null;
+                }
+            }
+            else if (rightChild === null) {
+                node.data = node.left.data;
+                node.left = node.left.left;
+                node.right = node.left.right;
+            } else if (rightChild.left === null) {
+                node.data = rightChild.data;
+                node.right = rightChild.right;
+            } else {
+                // let's find the most left child and its parent
+                let pair = this.#getPair(rightChild, rightChild.left);
+                node.data = pair[1].data;
+                pair[0].left = pair[1].right;
+            }
+        }
+        return;
+    }
+
+    // This method is used to find recursively the most left child
+    // it is implemented outside of the deleteItem method to save memory
+    // since the deleteItem is also called recursively.
+    #getPair(node, leftChild) {
+        if (leftChild.left === null)
+            return [node, leftChild];
+        return this.#getPair(leftChild, leftChild.left);
+    }
+
     #removeDuplicates(arr) {
         // Because the array is ordered and composed by numbers we can apply a first difference
         // The first difference generates a sequence whose length is 1 less than the original
