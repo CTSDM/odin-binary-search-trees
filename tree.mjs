@@ -81,8 +81,8 @@ class Tree {
             }
             else if (rightChild === null) {
                 node.data = node.left.data;
-                node.left = node.left.left;
                 node.right = node.left.right;
+                node.left = node.left.left;
             } else if (rightChild.left === null) {
                 node.data = rightChild.data;
                 node.right = rightChild.right;
