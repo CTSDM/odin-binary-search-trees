@@ -191,6 +191,20 @@ class Tree {
         }
     }
 
+    height(node) {
+        // height: the number of edges in the longest path from a given node to a leaf node
+        // Implementation done recursively.
+        // We assume that the give node is either valid or is member of the BST.
+        if (node.data === undefined)
+            throw new Error('the given node is not a valid Node.');
+        if (node.left === null && node.right === null)
+            return 0;
+        let right = node.right ? this.height(node.right) : 0;
+        let left = node.left ? this.height(node.left) : 0;
+
+        return (left > right) ? left + 1 : right + 1;
+    }
+
     // This method is used to find recursively the most left child
     // it is implemented outside of the deleteItem method to save memory
     // since the deleteItem is also called recursively.
