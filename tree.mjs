@@ -116,7 +116,7 @@ class Tree {
                 arrQueue.push(arrQueue[0].left);
             if (arrQueue[0].right !== null)
                 arrQueue.push(arrQueue[0].right);
-            callback(arrQueue.shift().data);
+            callback(arrQueue.shift());
             this.levelOrderRecursive(callback, arrQueue);
         }
     }
@@ -129,7 +129,7 @@ class Tree {
                 arrQueue.push(arrQueue[0].left);
             if (arrQueue[0].right !== null)
                 arrQueue.push(arrQueue[0].right);
-            callback(arrQueue.shift().data);
+            callback(arrQueue.shift());
         }
     }
 
