@@ -205,6 +205,19 @@ class Tree {
         return (left > right) ? left + 1 : right + 1;
     }
 
+    depth(node, auxNode = this.root) {
+        // depth: the number of edges in the path from a given node to the tree's root node
+        // We will implement it in a similar fashion the find method
+        if (node.data === undefined)
+            throw new Error('the given node is not a valid Node.');
+        if (node.data === auxNode.data)
+            return 0
+        if (node.data > auxNode.data)
+            return this.depth(node, auxNode.right) + 1;
+        if (node.data < auxNode.data)
+            return this.depth(node, auxNode.left) + 1;
+    }
+
     // This method is used to find recursively the most left child
     // it is implemented outside of the deleteItem method to save memory
     // since the deleteItem is also called recursively.
