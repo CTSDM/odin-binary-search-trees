@@ -154,6 +154,43 @@ class Tree {
         }
     }
 
+    preOrder(callback) {
+        const arrNodes = [];
+        preOrderRecursive(callback, this.root);
+        if (!callback)
+            return arrNodes;
+
+        // helper recursive function to traverse the binary tree in preorder
+        function preOrderRecursive(callback, node) {
+            if (node === null)
+                return
+            if (callback === undefined)
+                arrNodes.push(node.data)
+            else
+                callback(node);
+            preOrderRecursive(callback, node.left);
+            preOrderRecursive(callback, node.right);
+        }
+    }
+
+    postOrder(callback) {
+        const arrNodes = [];
+        postOrder(callback, this.root);
+        if (!callback)
+            return arrNodes;
+
+        function postOrder(callback, node) {
+            if (node === null)
+                return;
+            postOrder(callback, node.left);
+            postOrder(callback, node.right);
+            if (callback === undefined)
+                arrNodes.push(node.data);
+            else
+                callback(node);
+        }
+    }
+
     // This method is used to find recursively the most left child
     // it is implemented outside of the deleteItem method to save memory
     // since the deleteItem is also called recursively.
