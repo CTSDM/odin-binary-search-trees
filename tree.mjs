@@ -194,7 +194,7 @@ class Tree {
     height(node) {
         // height: the number of edges in the longest path from a given node to a leaf node
         // Implementation done recursively.
-        // We assume that the give node is either valid or is member of the BST.
+        // We assume that the give node is either invalid or is member of the BST.
         if (node.data === undefined)
             throw new Error('the given node is not a valid Node.');
         if (node.left === null && node.right === null)
