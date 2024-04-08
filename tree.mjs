@@ -133,6 +133,27 @@ class Tree {
         }
     }
 
+    inOrder(callback) {
+        const arrNodes = [];
+        inOrderRecursive(callback, this.root);
+        if (!callback)
+            return arrNodes
+
+        // helper recursive function to traverse the binary tree in order
+        function inOrderRecursive(callback, node) {
+            if (node === null)
+                return;
+
+            inOrderRecursive(callback, node.left);
+            // the callback might be not defined
+            if (callback === undefined)
+                arrNodes.push(node.data);
+            else
+                callback(node);
+            inOrderRecursive(callback, node.right);
+        }
+    }
+
     // This method is used to find recursively the most left child
     // it is implemented outside of the deleteItem method to save memory
     // since the deleteItem is also called recursively.
