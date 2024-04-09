@@ -195,6 +195,8 @@ class Tree {
         // height: the number of edges in the longest path from a given node to a leaf node
         // Implementation done recursively.
         // We assume that the give node is either invalid or is member of the BST.
+        if (node === null)
+            return -1
         if (node.data === undefined)
             throw new Error('the given node is not a valid Node.');
         if (node.left === null && node.right === null)
@@ -211,11 +213,34 @@ class Tree {
         if (node.data === undefined)
             throw new Error('the given node is not a valid Node.');
         if (node.data === auxNode.data)
-            return 0
+            return 0;
         if (node.data > auxNode.data)
             return this.depth(node, auxNode.right) + 1;
         if (node.data < auxNode.data)
             return this.depth(node, auxNode.left) + 1;
+    }
+
+    isBalanced() {
+        // A balanced tree is one where the difference between heights of
+        // the left subtree and the right subtree of every node is not more than 1.
+        // For heights < 3 the tree is always balanced
+        if (this.height(this.root) < 3)
+            return true;
+
+        return isBalancedRecursiveHelper.call(this, this.root);
+        // we proceed recursively with a helper function
+        function isBalancedRecursiveHelper(node) {
+            if (node === null)
+                return true;
+            if (Math.abs(this.height(node.left) - this.height(node.right)) > 1)
+                return false;
+            if (!isBalancedRecursiveHelper.call(this, node.left))
+                return false;
+            if (!isBalancedRecursiveHelper.call(this, node.right))
+                return false;
+
+            return true;
+        }
     }
 
     // This method is used to find recursively the most left child
