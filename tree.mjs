@@ -243,6 +243,13 @@ class Tree {
         }
     }
 
+    rebalance() {
+        if (this.isBalanced())
+            return;
+        const arrInOrder = this.inOrder();
+        this.root = this.#balanceTree(arrInOrder, 0, arrInOrder.length - 1);
+    }
+
     // This method is used to find recursively the most left child
     // it is implemented outside of the deleteItem method to save memory
     // since the deleteItem is also called recursively.
