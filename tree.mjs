@@ -108,20 +108,32 @@ class Tree {
         return null;
     }
 
-    levelOrderRecursive(callback, arrQueue = [this.root]) {
-        if (arrQueue[0] === null)
-            return null;
-        if (arrQueue.length > 0) {
-            if (arrQueue[0].left !== null)
-                arrQueue.push(arrQueue[0].left);
-            if (arrQueue[0].right !== null)
-                arrQueue.push(arrQueue[0].right);
-            callback(arrQueue.shift());
-            this.levelOrderRecursive(callback, arrQueue);
+    levelOrderRecursive(callback) {
+        const arrNodes = [];
+        recursiveHelper(callback);
+        if (!callback)
+            return arrNodes;
+
+        function recursiveHelper(arrQueue = [this.root], callback) {
+            if (arrQueue[0] === null)
+                return null;
+            if (arrQueue.length > 0) {
+                if (arrQueue[0].left !== null)
+                    arrQueue.push(arrQueue[0].left);
+                if (arrQueue[0].right !== null)
+                    arrQueue.push(arrQueue[0].right);
+                if (callback)
+                    callback(arrQueue.shift());
+                else
+                    arrNodes.push(arrQueue.shift().data);
+                this.levelOrderRecursive(callback, arrQueue);
+            }
         }
     }
 
-    levelOrderIterative(callback, arrQueue = [this.root]) {
+    levelOrderIterative(callback) {
+        const arrNodes = [];
+        const arrQueue = [this.root]
         if (arrQueue[0] === null)
             return null;
         while (arrQueue.length > 0) {
@@ -129,8 +141,14 @@ class Tree {
                 arrQueue.push(arrQueue[0].left);
             if (arrQueue[0].right !== null)
                 arrQueue.push(arrQueue[0].right);
-            callback(arrQueue.shift());
+            if (callback)
+                callback(arrQueue.shift());
+            else
+                arrNodes.push(arrQueue.shift().data);
         }
+
+        if (!callback)
+            return arrNodes;
     }
 
     inOrder(callback) {
